@@ -47,6 +47,8 @@ Output:
 +-------------+------------+---------+
 
 Solution:
+#SELECT NAME, POPULATION, AREA FROM WORLD WHERE AREA >= 3000000 OR POPULATION >= 25000000;  */
+
 import pandas as pd
 
 def big_countries(world: pd.DataFrame) -> pd.DataFrame:
