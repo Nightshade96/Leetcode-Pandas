@@ -60,3 +60,16 @@ SELECT
             NULL
     END AS  SecondHighestSalary
 
+import pandas as pd
+
+def second_highest_salary(employee: pd.DataFrame) -> pd.DataFrame:
+    # Check if there are multiple distinct salaries
+    if employee['salary'].nunique() > 1:
+    # Find the second highest salary
+        second_highest_salary = employee['salary'].sort_values(ascending=False).unique()[1]
+    else:
+        second_highest_salary = None
+    result_df = pd.DataFrame({'SecondHighestSalary': [second_highest_salary]})
+
+    return result_df
+    
