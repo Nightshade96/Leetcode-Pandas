@@ -76,3 +76,23 @@ EMPL_RANKS AS (
 SELECT DEPARTMENT, EMPLOYEE, SALARY 
 FROM EMPL_RANKS 
 WHERE RNK = 1;
+
+
+import pandas as pd
+
+def department_highest_salary(employee: pd.DataFrame, department: pd.DataFrame) -> pd.DataFrame:
+    # Merge the employee and department DataFrames
+    dept_df = pd.merge(employee, department, left_on='departmentId', right_on='id', suffixes=('_EMPLOYEE', '_DEPARTMENT'))
+
+    # Calculate ranks based on salary within each department
+    dept_df['RNK'] = dept_df.groupby('name_DEPARTMENT')['salary'].rank(method='dense', ascending=False)
+
+    # Filter the DataFrame to select rows where the rank is equal to 1
+    result_df = dept_df[dept_df['RNK'] == 1]
+
+    # Select the desired columns
+    result_df = result_df[['name_DEPARTMENT', 'name_EMPLOYEE', 'salary']]
+    df = result_df.rename(columns={'name_DEPARTMENT': 'Department', 'name_EMPLOYEE': 'Employee'})
+    return df
+
+
